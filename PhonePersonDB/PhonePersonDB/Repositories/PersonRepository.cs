@@ -35,7 +35,7 @@ namespace PhonePersonDB.Repositories
 
             else
             {
-                Console.WriteLine("Henkilöä tällä id:llä ei löytynyt!");
+                Console.WriteLine();
             }
         }
 
@@ -58,7 +58,10 @@ namespace PhonePersonDB.Repositories
 
         public Person ReadById(long id)
         {
-            var persons = _phonepersondbContext.Person.Find(id);
+            var persons = _phonepersondbContext.Person
+                .Include(p => p.Phone)
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
             return persons;
         }
 
@@ -79,6 +82,11 @@ namespace PhonePersonDB.Repositories
                 Console.WriteLine("Tietojen päivitys epäonnistui - henkilöä ei ole olemassa!");
                 Console.WriteLine("\nPaina ENTER-näppäintä palataksesi alkuun.");
             }
+        }
+
+        internal object ReadById(string v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

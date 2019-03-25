@@ -36,11 +36,11 @@ namespace PhonePersonDB
                         break;
 
                     case "D":
-                        uiModel.DeletePerson(9);
+                        uiModel.DeletePerson();
                         break;
 
                     case "E":
-                        uiModel.ReadById(1);
+                        uiModel.ReadById();
                         break;
 
                     case "X":

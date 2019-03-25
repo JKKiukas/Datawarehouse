@@ -12,10 +12,29 @@ namespace PhonePersonDB
 
         public void ReadPerson()
         {
-            var persons = personRepository.Read();
-            foreach (var person in persons)
+            var people = personRepository.Read();
+
+            foreach (var person in people)
             {
-                Console.WriteLine($"{person.Id} {person.Name} {person.Age} {person.Phone}");
+                if (people == null)
+                {
+                    Console.WriteLine($"Henkilöä ei löydy!");
+                }
+
+                else
+                {
+                    Console.WriteLine($"\nHenkilön ID: {person.Id}" +
+                                      $"\nHenkilön Nimi: {person.Name}" +
+                                      $"\nHenkilön Ikä: {person.Age}" +
+                                      $"\nHenkilön puhelinnumero:");
+
+                    foreach (var p in person.Phone)
+                    {
+                        Console.WriteLine($"{p.Type} {p.Number}");
+                    }
+
+                    Console.WriteLine();
+                }
             }
 
             Console.WriteLine("\nPaina ENTER-näppäintä palataksesi alkuun.");
@@ -38,11 +57,24 @@ namespace PhonePersonDB
             Console.WriteLine("Paina ENTER-näppäintä palataksesi alkuun.");
         }
 
-        public void DeletePerson(int id)
+        public void DeletePerson()
         {
-            ReadById(id);
-            personRepository.Delete(id);
-            ReadById(id);
+            Console.WriteLine("\nSyötä henkilön ID, jonka tiedot haluat poistaa.");
+            var userInput = int.Parse(Console.ReadLine());
+            personRepository.Delete(userInput);
+
+            object persons = null;
+            if (persons == null)
+            {
+                Console.WriteLine($"Henkilöä ID:llä {userInput} ei löydy!");
+                Console.WriteLine("\nPaina ENTER-näppäintä palataksesi alkuun.");
+            }
+
+            else
+            {
+                Console.WriteLine("Tiedot poistettu onnistuneesti.");
+                Console.WriteLine("\nPaina ENTER-näppäintä palataksesi alkuun.");
+            }
         }
 
         public void UpdatePerson()
@@ -59,12 +91,16 @@ namespace PhonePersonDB
             personRepository.Update(11, updatePerson);
         }
 
-        public void ReadById(int id)
+        public void ReadById()
         {
-            var persons = personRepository.ReadById(id);
+
+            Console.WriteLine("\nSyötä henkilön ID, jonka tiedot haluat nähdä.");
+            var userInput = int.Parse(Console.ReadLine());
+            var persons = personRepository.ReadById(userInput);
+
             if (persons == null)
             {
-                Console.WriteLine($"Henkilöä numerolla {id} ei löydy!");
+                Console.WriteLine($"Henkilöä ID:llä {userInput} ei löydy!");
             }
 
             else
@@ -72,7 +108,14 @@ namespace PhonePersonDB
                 Console.WriteLine($"\nHenkilön ID: {persons.Id}" +
                                   $"\nHenkilön Nimi: {persons.Name}" +
                                   $"\nHenkilön Ikä: {persons.Age}" +
-                                  $"\nHenkilön puhelinnumero: {persons.Phone}");
+                                  $"\nHenkilön puhelinnumero:");
+
+                foreach (var p in persons.Phone)
+                {
+                    Console.Write($"{p.Type} {p.Number}");
+                }
+
+                Console.WriteLine();
                 Console.WriteLine("\nPaina ENTER-näppäintä palataksesi alkuun.");
             }
         }

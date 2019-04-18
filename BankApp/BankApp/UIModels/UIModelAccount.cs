@@ -9,14 +9,10 @@ namespace BankApp.UIModels
     class UIModelAccount
     {
         private static readonly AccountRepository _accountRepository = new AccountRepository();
-        private static readonly BankRepository _bankRepository = new BankRepository();
-        private static readonly CustomerRepository _customerRepository = new CustomerRepository();
 
         public void ReadAccount()
         {
             var accounts = _accountRepository.Read();
-            var bankscustomer = _bankRepository.ReadBank();
-            var customers = _customerRepository.Read();
 
             foreach (var a in accounts)
             {

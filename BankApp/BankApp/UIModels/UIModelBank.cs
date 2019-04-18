@@ -9,7 +9,6 @@ namespace BankApp.UIModels
     class UIModelBank
     {
         private static readonly BankRepository _bankRepository = new BankRepository();
-        private static readonly CustomerRepository _customerRepository = new CustomerRepository();
 
         public void ReadBank()
         {
